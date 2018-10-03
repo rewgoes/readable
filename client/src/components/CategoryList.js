@@ -1,28 +1,14 @@
 import React, { Component } from 'react'
-import { fetchCategories } from '../utils/api'
+import { connect } from 'react-redux'
+import { fetchCategories } from '../actions'
 
 class CategoryList extends Component {
-  state = {
-    categories: []
-  }
-
-  componentDidMount() {
-    this.getCategories()
-  }
-
-  getCategories() {
-    fetchCategories().then(result => {
-      this.setState({
-        categories: [{
-          name: 'all',
-          path: 'all'
-        }, ...result.categories]
-      })
-    });
+  componentWillMount() {
+    this.props.getCategories();
   }
 
   render() {
-    const { categories } = this.state
+    const { categories } = this.props
 
     return (
       <ul className='category-list'>
@@ -36,4 +22,14 @@ class CategoryList extends Component {
   }
 }
 
-export default CategoryList
+const mapStateToProps = (state) => {
+  return { categories: state.categories }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCategories: () => dispatch(fetchCategories()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

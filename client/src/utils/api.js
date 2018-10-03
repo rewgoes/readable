@@ -11,7 +11,7 @@ const headers = {
  * 
  * GET /categories
  */
-export function fetchCategories() {
+export function fetchCategoriesApi() {
   return fetch(`${API_URL}/categories`, { headers })
     .then((res) => res.json())
 }
