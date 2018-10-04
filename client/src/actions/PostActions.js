@@ -1,4 +1,7 @@
-import { fetchPostsApi } from '../utils/api'
+import {
+  fetchPostsApi,
+  fetchCategoryPostsApi
+} from '../utils/api'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 function requestPosts() {
@@ -15,14 +18,22 @@ function receivePosts(posts) {
   }
 }
 
-export function fetchPosts() {
+export function fetchPosts(category) {
   return function (dispatch) {
     dispatch(requestPosts())
 
-    fetchPostsApi().then(
-      result => {
-        dispatch(receivePosts(result))
-      }
-    )
+    if (!category || category === "all") {
+      fetchPostsApi().then(
+        result => {
+          dispatch(receivePosts(result))
+        }
+      )
+    } else {
+      fetchCategoryPostsApi(category).then(
+        result => {
+          dispatch(receivePosts(result))
+        }
+      )
+    }
   }
 }

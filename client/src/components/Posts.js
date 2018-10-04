@@ -4,7 +4,15 @@ import { fetchPosts } from '../actions/PostActions'
 
 class Posts extends Component {
   componentWillMount() {
-    this.props.getPosts();
+    this.props.getPosts(this.getCurrentCategory())
+  }
+
+  getCurrentCategory() {
+    if (this.props.match && this.props.match.params) {
+      return this.props.match.params.category
+    } else {
+      return "all"
+    }
   }
 
   render() {
@@ -28,7 +36,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPosts: () => dispatch(fetchPosts()),
+    getPosts: (category) => dispatch(fetchPosts(category)),
   }
 }
 
