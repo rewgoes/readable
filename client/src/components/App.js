@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CategoryList from './CategoryList'
+import Posts from './Posts';
 
 class App extends Component {
   render() {
@@ -11,6 +12,9 @@ class App extends Component {
         <div>
           <div>
             <CategoryList />
+          </div>
+          <div>
+            <Posts />
           </div>
         </div>
       </div>

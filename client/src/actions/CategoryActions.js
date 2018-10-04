@@ -21,7 +21,6 @@ export function fetchCategories() {
 
     fetchCategoriesApi().then(
       result => {
-        console.log('Categories: ', result)
         dispatch(receiveCategories(result))
       }
     );

@@ -23,7 +23,7 @@ export function fetchCategoriesApi() {
  * 
  * @param {string} category category name
  */
-export function fetchCategoryPosts(category) {
+export function fetchCategoryPostsApi(category) {
   return fetch(`${API_URL}/${category}/posts`, { headers })
     .then((res) => res.json())
 }
@@ -33,7 +33,7 @@ export function fetchCategoryPosts(category) {
  * 
  * GET /posts
  */
-export function fetchPosts() {
+export function fetchPostsApi() {
   return fetch(`${API_URL}/posts`, { headers })
     .then((res) => res.json())
 }
@@ -45,7 +45,7 @@ export function fetchPosts() {
  * 
  * @param {object} postValues Post's title, body, author and category
  */
-export function addPost(postValues) {
+export function addPostApi(postValues) {
   const post = {
     id: require('uuid/v1')(),
     timestamp: Date.now(),
@@ -68,7 +68,7 @@ export function addPost(postValues) {
  * 
  * @param {string} postId Post ID
  */
-export function fetchPost(postId) {
+export function fetchPostApi(postId) {
   return fetch(`${API_URL}/posts/${postId}`, { headers })
     .then((res) => res.json())
 }
@@ -82,7 +82,7 @@ export function fetchPost(postId) {
  * @param {string} vote Either "upVote" or "downVote".
  * 
  */
-export function votePost(postId, vote) {
+export function votePostApi(postId, vote) {
   return fetch(`${API_URL}/posts/${postId}`, {
     method: 'POST',
     headers: {
@@ -103,7 +103,7 @@ export function votePost(postId, vote) {
  * @param {string} postId Post ID
  * @param {object} postValues Post with title and/or body
  */
-export function editPost(postId, postValues) {
+export function editPostApi(postId, postValues) {
   const { title, body } = postValues
   const post = {
     title,
@@ -127,7 +127,7 @@ export function editPost(postId, postValues) {
  * 
  * @param {string} postId Post ID
  */
-export function deletePost(postId) {
+export function deletePostApi(postId) {
   return fetch(`${API_URL}/posts/${postId}`, {
     method: 'DELETE',
     headers
@@ -141,7 +141,7 @@ export function deletePost(postId) {
  * 
  * @param {string} postId Post ID
  */
-export function fetchPostComments(postId) {
+export function fetchPostCommentsApi(postId) {
   return fetch(`${API_URL}/posts/${postId}/comments`, { headers })
     .then((res) => res.json())
 }
@@ -153,7 +153,7 @@ export function fetchPostComments(postId) {
  * 
  * @param {object} commentValues Comments's body, author and parentId
  */
-export function addComment(commentValues) {
+export function addCommentApi(commentValues) {
   const comment = {
     id: require('uuid/v1')(),
     timestamp: Date.now(),
@@ -176,7 +176,7 @@ export function addComment(commentValues) {
  * 
  * @param {string} commentId Comment ID
  */
-export function fetchComment(commentId) {
+export function fetchCommentApi(commentId) {
   return fetch(`${API_URL}/comments/${commentId}`, { headers })
     .then((res) => res.json())
 }
@@ -189,7 +189,7 @@ export function fetchComment(commentId) {
  * @param {string} commentId Comment ID
  * @param {string} vote Either "upVote" or "downVote".
  */
-export function voteComment(commentId, vote) {
+export function voteCommentApi(commentId, vote) {
   return fetch(`${API_URL}/comments/${commentId}`, {
     method: 'POST',
     headers: {
@@ -210,7 +210,7 @@ export function voteComment(commentId, vote) {
  * @param {string} commentId Comment ID
  * @param {object} commentValues Comment values with body.
  */
-export function editComment(commentId, commentValues) {
+export function editCommentApi(commentId, commentValues) {
   const { body } = commentValues
   const comment = {
     timestamp: Date.now,
@@ -233,7 +233,7 @@ export function editComment(commentId, commentValues) {
  * 
  * @param {string} commentId Comment ID
  */
-export function deleteComment(commentId) {
+export function deleteCommentApi(commentId) {
   return fetch(`${API_URL}/comments/${commentId}`, {
     method: 'DELETE',
     headers
