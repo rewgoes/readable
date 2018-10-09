@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPosts, deletePost } from '../actions/PostActions'
+import { fetchPosts, deletePost, votePost } from '../actions/PostActions'
 import { Link } from 'react-router-dom'
 
 class Posts extends Component {
@@ -17,7 +17,7 @@ class Posts extends Component {
   }
 
   render() {
-    const { posts, deletePost } = this.props
+    const { posts, deletePost, votePost } = this.props
 
     return (
       <ul>
@@ -25,7 +25,10 @@ class Posts extends Component {
           <li key={post.id}>
             <div>
               <Link to={`/${post.category}/${post.id}`}><h3>{post.title}</h3></Link>
+              <div>Votes: {post.voteScore}</div>
               <div onClick={() => deletePost(post.id)}>Delete</div>
+              <div onClick={() => votePost(post.id, "upVote")}>Vote Up</div>
+              <div onClick={() => votePost(post.id, "downVote")}>Vote Down</div>
             </div>
           </li>
         ))}
@@ -42,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getPosts: (category) => dispatch(fetchPosts(category)),
     deletePost: (id) => dispatch(deletePost(id)),
+    votePost: (id, vote) => dispatch(votePost(id, vote))
   }
 }
 

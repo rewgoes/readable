@@ -1,7 +1,8 @@
 import {
   fetchPostsApi,
   fetchCategoryPostsApi,
-  deletePostApi
+  deletePostApi,
+  votePostApi
 } from '../utils/api'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
@@ -61,6 +62,33 @@ export function deletePost(id) {
     deletePostApi(id).then(
       result => {
         dispatch(receiveDeletePost(result))
+      }
+    )
+  }
+}
+
+export const REQUEST_VOTE_POST = 'REQUEST_VOTE_POST'
+function requestVotePost() {
+  return {
+    type: REQUEST_VOTE_POST
+  }
+}
+
+export const RECEIVE_VOTE_POST = 'RECEIVE_VOTE_POST'
+function receiveVotePost(posts) {
+  return {
+    type: RECEIVE_VOTE_POST,
+    posts
+  }
+}
+
+export function votePost(id, vote) {
+  return function (dispatch) {
+    dispatch(requestVotePost())
+
+    votePostApi(id, vote).then(
+      result => {
+        dispatch(receiveVotePost(result))
       }
     )
   }
