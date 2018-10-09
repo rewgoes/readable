@@ -1,6 +1,7 @@
 import {
   fetchPostsApi,
-  fetchCategoryPostsApi
+  fetchCategoryPostsApi,
+  deletePostApi
 } from '../utils/api'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
@@ -35,5 +36,32 @@ export function fetchPosts(category) {
         }
       )
     }
+  }
+}
+
+export const REQUEST_DELETE_POST = 'REQUEST_DELETE_POST'
+function requestDeletePost() {
+  return {
+    type: REQUEST_DELETE_POST
+  }
+}
+
+export const RECEIVE_DELETE_POST = 'RECEIVE_DELETE_POST'
+function receiveDeletePost(posts) {
+  return {
+    type: RECEIVE_DELETE_POST,
+    posts
+  }
+}
+
+export function deletePost(id) {
+  return function (dispatch) {
+    dispatch(requestDeletePost())
+
+    deletePostApi(id).then(
+      result => {
+        dispatch(receiveDeletePost(result))
+      }
+    )
   }
 }

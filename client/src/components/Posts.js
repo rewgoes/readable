@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPosts } from '../actions/PostActions'
+import { fetchPosts, deletePost } from '../actions/PostActions'
+import { Link } from 'react-router-dom'
 
 class Posts extends Component {
   componentWillMount() {
@@ -16,13 +17,16 @@ class Posts extends Component {
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, deletePost } = this.props
 
     return (
       <ul>
-        {posts.map((item) => (
-          <li key={item.id}>
-            <h3>{item.title}</h3>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <div>
+              <Link to={`/${post.category}/${post.id}`}><h3>{post.title}</h3></Link>
+              <div onClick={() => deletePost(post.id)}>Delete</div>
+            </div>
           </li>
         ))}
       </ul>
@@ -37,6 +41,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getPosts: (category) => dispatch(fetchPosts(category)),
+    deletePost: (id) => dispatch(deletePost(id)),
   }
 }
 

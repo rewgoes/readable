@@ -1,6 +1,8 @@
 import {
   REQUEST_POSTS,
-  RECEIVE_POSTS
+  RECEIVE_POSTS,
+  REQUEST_DELETE_POST,
+  RECEIVE_DELETE_POST
 } from '../actions/PostActions'
 
 export default function (state = [], action) {
@@ -9,6 +11,10 @@ export default function (state = [], action) {
       return state
     case RECEIVE_POSTS:
       return action.posts
+    case REQUEST_DELETE_POST:
+      return state
+    case RECEIVE_DELETE_POST:
+      return state.filter((post) => post.id !== action.posts.id)
     default:
       return state
   }
