@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import CategoryList from './CategoryList'
-import Posts from './Posts';
+import Posts from './Posts'
+import PostDetail from './PostDetail'
 
 class App extends Component {
   render() {
@@ -17,6 +18,14 @@ class App extends Component {
             </div>
             <div>
               <Posts {...props} />
+            </div>
+          </div>
+        )} />
+        
+        <Route exact path="/:category/:postId" render={(props) => (
+          <div>
+            <div>
+              <PostDetail {...props} />
             </div>
           </div>
         )} />
