@@ -21,23 +21,33 @@ class Posts extends Component {
     const { posts, deletePost, votePost } = this.props
 
     return (
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <div>
-              <Link to={`/${post.category}/${post.id}`}><h3>{post.title}</h3></Link>
-              <div>by {post.author}</div>
-              <div>{timeToString(new Date(post.timestamp))}</div>
-              <div>Comment: {post.commentCount}</div>
-              <div>Votes: {post.voteScore}</div>
-              <div>{post.body}</div>
-              <div onClick={() => deletePost(post.id)}>Delete</div>
-              <div onClick={() => votePost(post.id, "upVote")}>Vote Up</div>
-              <div onClick={() => votePost(post.id, "downVote")}>Vote Down</div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <h2>Posts</h2>
+        <div>
+          <label htmlFor="sortSelector">Sort by:</label>
+          <select onChange={event => { }} id="sortSelector">
+            <option value='vote'>Vote</option>
+            <option value='date'>Date</option>
+          </select>
+        </div>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <div>
+                <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
+                <div>by {post.author}</div>
+                <div>{timeToString(new Date(post.timestamp))}</div>
+                <div>Comment: {post.commentCount}</div>
+                <div>Votes: {post.voteScore}</div>
+                <div>{post.body}</div>
+                <div><button href="#" onClick={() => deletePost(post.id)}>Delete</button ></div>
+                <div><button href="#" onClick={() => votePost(post.id, "upVote")}>Vote Up</button ></div>
+                <div><button href="#" onClick={() => votePost(post.id, "downVote")}>Vote Down</button ></div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 }

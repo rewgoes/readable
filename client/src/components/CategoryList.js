@@ -13,15 +13,20 @@ class CategoryList extends Component {
     const { categories, getPosts } = this.props
 
     return (
-      <ul className='category-list'>
-        {categories.map((item) => (
-          <li key={item.path}>
-            <Link to={item.path === 'all' ? '/' : `/${item.path}`} onClick={() => getPosts(item.path)}>
-              <h3>{item.name}</h3>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <h2>Categories</h2>
+        <ul className='category-list'>
+          {categories.map((item) => (
+            <li key={item.path}>
+              <h3>
+                <Link to={item.path === 'all' ? '/' : `/${item.path}`} onClick={() => getPosts(item.path)}>
+                  {item.name}
+                </Link>
+              </h3>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 }
