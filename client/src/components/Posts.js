@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPosts, deletePost, votePost } from '../actions/PostActions'
 import { Link } from 'react-router-dom'
+import { timeToString } from '../utils/helpers'
 
 class Posts extends Component {
   componentWillMount() {
@@ -25,7 +26,11 @@ class Posts extends Component {
           <li key={post.id}>
             <div>
               <Link to={`/${post.category}/${post.id}`}><h3>{post.title}</h3></Link>
+              <div>by {post.author}</div>
+              <div>{timeToString(new Date(post.timestamp))}</div>
+              <div>Comment: {post.commentCount}</div>
               <div>Votes: {post.voteScore}</div>
+              <div>{post.body}</div>
               <div onClick={() => deletePost(post.id)}>Delete</div>
               <div onClick={() => votePost(post.id, "upVote")}>Vote Up</div>
               <div onClick={() => votePost(post.id, "downVote")}>Vote Down</div>
