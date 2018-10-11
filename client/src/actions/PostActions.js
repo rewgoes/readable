@@ -2,7 +2,8 @@ import {
   fetchPostsApi,
   fetchCategoryPostsApi,
   deletePostApi,
-  votePostApi
+  votePostApi,
+  fetchPostApi
 } from '../utils/api'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
@@ -99,5 +100,32 @@ export function sortPosts(sortBy) {
   return {
     type: SORT_POSTS,
     sortBy
+  }
+}
+
+export const REQUEST_POST = 'REQUEST_POST'
+function requestPost() {
+  return {
+    type: REQUEST_POST
+  }
+}
+
+export const RECEIVE_POST = 'RECEIVE_POST'
+function receivePost(posts) {
+  return {
+    type: RECEIVE_POST,
+    posts
+  }
+}
+
+export function fetchPost(id) {
+  return function (dispatch) {
+    dispatch(requestPost())
+
+    fetchPostApi(id).then(
+      result => {
+        dispatch(receivePost(result))
+      }
+    )
   }
 }
