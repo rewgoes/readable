@@ -93,3 +93,11 @@ export function votePost(id, vote) {
     )
   }
 }
+
+export const SORT_POSTS = 'SORT_POSTS'
+export function sortPosts(sortBy) {
+  return {
+    type: SORT_POSTS,
+    sortBy
+  }
+}
