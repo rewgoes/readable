@@ -4,6 +4,7 @@ import CategoryList from './CategoryList'
 import Posts from './Posts'
 import PostDetail from './PostDetail'
 import { Link } from 'react-router-dom'
+import Comments from './Comments'
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
           <div>
             <div>
               <PostDetail {...props} />
+              <Comments {...props} />
             </div>
           </div>
         )} />

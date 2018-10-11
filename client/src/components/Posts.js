@@ -48,7 +48,7 @@ class Posts extends Component {
                 <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
                 <div>by {post.author}</div>
                 <div>{timeToString(new Date(post.timestamp))}</div>
-                <div>Comment: {post.commentCount}</div>
+                <div>Comments: {post.commentCount}</div>
                 <div>Votes: {post.voteScore}</div>
                 <div>{post.body}</div>
                 <div><button href="#" onClick={() => deletePost(post.id)}>Delete</button ></div>
