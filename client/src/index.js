@@ -19,7 +19,9 @@ const store = createStore(
       thunkMiddleware, // lets us dispatch() functions
       loggerMiddleware, // neat middleware that logs actions
     ),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
+      ? window.devToolsExtension()
+      : f => f
   )
 )
 
