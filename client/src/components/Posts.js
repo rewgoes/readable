@@ -31,35 +31,43 @@ class Posts extends Component {
       }
     }
 
-    return (
-      <div>
-        <h2>Posts</h2>
+    if (!posts || posts.length === 0) {
+      return (
         <div>
-          <label htmlFor="sortSelector">Sort by:</label>
-          <select onChange={event => sortPosts(event.target.value)} id="sortSelector">
-            <option value='vote'>Vote</option>
-            <option value='date'>Date</option>
-          </select>
+          <h3>No posts yet, be the first to post!</h3>
         </div>
-        <ul>
-          {sortCurrentPosts().map((post) => (
-            <li key={post.id}>
-              <div>
-                <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
-                <div>by {post.author}</div>
-                <div>{timeToString(new Date(post.timestamp))}</div>
-                <div>Comments: {post.commentCount}</div>
-                <div>Votes: {post.voteScore}</div>
-                <div>{post.body}</div>
-                <div><button href="#" onClick={() => deletePost(post.id)}>Delete</button ></div>
-                <div><button href="#" onClick={() => votePost(post.id, "upVote")}>Vote Up</button ></div>
-                <div><button href="#" onClick={() => votePost(post.id, "downVote")}>Vote Down</button ></div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
+      )
+    } else {
+      return (
+        <div>
+          <h2>Posts</h2>
+          <div>
+            <label htmlFor="sortSelector">Sort by:</label>
+            <select onChange={event => sortPosts(event.target.value)} id="sortSelector">
+              <option value='vote'>Vote</option>
+              <option value='date'>Date</option>
+            </select>
+          </div>
+          <ul>
+            {sortCurrentPosts().map((post) => (
+              <li key={post.id}>
+                <div>
+                  <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
+                  <div>by {post.author}</div>
+                  <div>{timeToString(new Date(post.timestamp))}</div>
+                  <div>Comments: {post.commentCount}</div>
+                  <div>Votes: {post.voteScore}</div>
+                  <div>{post.body}</div>
+                  <div><button href="#" onClick={() => deletePost(post.id)}>Delete</button ></div>
+                  <div><button href="#" onClick={() => votePost(post.id, "upVote")}>Vote Up</button ></div>
+                  <div><button href="#" onClick={() => votePost(post.id, "downVote")}>Vote Down</button ></div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
   }
 }
 

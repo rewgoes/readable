@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchComments } from '../actions/CommentActions'
+import { fetchComments, deleteComment, voteComment } from '../actions/CommentActions'
 import { timeToString } from '../utils/helpers'
 
 class Comments extends Component {
@@ -9,11 +9,9 @@ class Comments extends Component {
   }
 
   render() {
-    const { comments } = this.props
-    const deleteComment = function () { }
-    const voteComment = function () { }
+    const { comments, deleteComment, voteComment } = this.props
 
-    if (!comments) {
+    if (!comments || comments.length === 0) {
       return (
         <div>
           <h3>No comments yet, be the first to comment!</h3>
@@ -52,7 +50,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getComments: (id) => dispatch(fetchComments(id))
+    getComments: (id) => dispatch(fetchComments(id)),
+    deleteComment: (id) => dispatch(deleteComment(id)),
+    voteComment: (id, vote) => dispatch(voteComment(id, vote)),
   }
 }
 
