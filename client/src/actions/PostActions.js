@@ -3,7 +3,8 @@ import {
   fetchCategoryPostsApi,
   deletePostApi,
   votePostApi,
-  fetchPostApi
+  fetchPostApi,
+  addPostApi,
 } from '../utils/api'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
@@ -129,3 +130,34 @@ export function fetchPost(id) {
     )
   }
 }
+
+
+
+export const REQUEST_ADD_POST = 'REQUEST_ADD_POST'
+function requestAddPost() {
+  return {
+    type: REQUEST_ADD_POST
+  }
+}
+
+export const RECEIVE_ADD_POST = 'RECEIVE_ADD_POST'
+function receiveAddPost(posts) {
+  return {
+    type: RECEIVE_ADD_POST,
+    posts
+  }
+}
+
+export const submitPost = (post) =>
+  (dispatch) => {
+    dispatch(requestAddPost())
+
+    return new Promise((resolve) => {
+      addPostApi(post).then(
+        result => {
+          dispatch(receiveAddPost(result))
+          resolve(result)
+        }
+      )
+    });
+  }

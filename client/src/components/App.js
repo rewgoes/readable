@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import CategoryList from './CategoryList'
 import Posts from './Posts'
 import PostDetail from './PostDetail'
 import { Link } from 'react-router-dom'
 import Comments from './Comments'
+import NewPost from './NewPost'
 
 class App extends Component {
   render() {
@@ -13,25 +14,35 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title"><Link to={`/`}>Readable</Link></h1>
         </header>
-        <Route exact path="/:category?" render={(props) => (
-          <div>
+        <Switch>
+          <Route exact path="/post/new" render={(props) => (
             <div>
-              <CategoryList {...props} />
+              <div>
+                <NewPost {...props} />
+              </div>
             </div>
-            <div>
-              <Posts {...props} />
-            </div>
-          </div>
-        )} />
+          )} />
 
-        <Route exact path="/:category/:postId" render={(props) => (
-          <div>
+          <Route exact path="/:category?" render={(props) => (
             <div>
-              <PostDetail {...props} />
-              <Comments {...props} />
+              <div>
+                <CategoryList {...props} />
+              </div>
+              <div>
+                <Posts {...props} />
+              </div>
             </div>
-          </div>
-        )} />
+          )} />
+
+          <Route exact path="/:category/:postId" render={(props) => (
+            <div>
+              <div>
+                <PostDetail {...props} />
+                <Comments {...props} />
+              </div>
+            </div>
+          )} />
+        </Switch>
       </div>
     );
   }

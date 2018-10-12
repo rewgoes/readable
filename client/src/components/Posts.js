@@ -48,6 +48,9 @@ class Posts extends Component {
               <option value='date'>Date</option>
             </select>
           </div>
+          <div>
+            <h3><Link to={`/post/new`}>New post</Link></h3>
+          </div>
           <ul>
             {sortCurrentPosts().map((post) => (
               <li key={post.id}>
