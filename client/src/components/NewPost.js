@@ -73,8 +73,12 @@ class NewPost extends Component {
           </div>
           <div><input type="submit" value="Submit" onClick={(event) => {
             event.preventDefault()
-            submitPost(post).then(() => {
-              this.props.history.push("/")
+            submitPost(post).then((post) => {
+              if (post) {
+                this.props.history.push(`/${post.category}/${post.id}`)
+              } else {
+                this.props.history.push("/")
+              }
             })
           }} /></div>
           <div><input type="button" value="Cancel" onClick={(event) => {
