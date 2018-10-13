@@ -6,6 +6,7 @@ import PostDetail from './PostDetail'
 import { Link } from 'react-router-dom'
 import Comments from './Comments'
 import NewPost from './NewPost'
+import NewComment from './NewComment'
 
 class App extends Component {
   render() {
@@ -38,6 +39,7 @@ class App extends Component {
             <div>
               <div>
                 <PostDetail {...props} />
+                <NewComment {...props} />
                 <Comments {...props} />
               </div>
             </div>

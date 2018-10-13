@@ -2,6 +2,7 @@ import {
   fetchPostCommentsApi,
   deleteCommentApi,
   voteCommentApi,
+  addCommentApi,
 } from '../utils/api'
 
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS'
@@ -84,3 +85,32 @@ export function voteComment(id, vote) {
     )
   }
 }
+
+export const REQUEST_ADD_COMMENT = 'REQUEST_ADD_COMMENT'
+function requestAddComments() {
+  return {
+    type: REQUEST_ADD_COMMENT
+  }
+}
+
+export const RECEIVE_ADD_COMMENT = 'RECEIVE_ADD_COMMENT'
+function receiveAddComments(comment) {
+  return {
+    type: RECEIVE_ADD_COMMENT,
+    comment
+  }
+}
+
+export const submitComment = (comment) =>
+  (dispatch) => {
+    dispatch(requestAddComments())
+
+    return new Promise((resolve) => {
+      addCommentApi(comment).then(
+        result => {
+          dispatch(receiveAddComments(result))
+          resolve(result)
+        }
+      )
+    });
+  }
