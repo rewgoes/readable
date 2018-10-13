@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCategories } from '../actions/CategoryActions'
 import { fetchPosts } from '../actions/PostActions'
-import { Link } from 'react-router-dom'
+import { Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { isEmpty } from '../utils/helpers'
 
 class CategoryList extends Component {
   componentWillMount() {
@@ -13,20 +14,30 @@ class CategoryList extends Component {
     const { categories, getPosts } = this.props
 
     return (
-      <div>
-        <h2>Categories</h2>
-        <ul className='category-list'>
-          {categories.map((item) => (
-            <li key={item.path}>
-              <h3>
-                <Link to={item.path === 'all' ? '/' : `/${item.path}`} onClick={() => getPosts(item.path)}>
+      <Col md={3}>
+        <Row>
+          <Col md={12}>
+            <h2>Categories</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <ListGroup>
+              {categories.map((item) => (
+                <ListGroupItem
+                  key={item.path}
+                  active={item.path === this.props.match.params.category || (isEmpty(this.props.match.params.category) && item.path === "all")}
+                  onClick={() => {
+                    this.props.history.push(item.path === 'all' ? '/' : `/${item.path}`)
+                    getPosts(item.path)
+                  }}>
                   {item.name}
-                </Link>
-              </h3>
-            </li>
-          ))}
-        </ul>
-      </div>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </Col>
+        </Row>
+      </Col>
     );
   }
 }

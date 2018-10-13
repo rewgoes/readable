@@ -9,21 +9,22 @@ import NewPost from './NewPost'
 import NewComment from './NewComment'
 import EditPost from './EditPost'
 import EditComment from './EditComment'
+import { Row, Grid, Col } from 'react-bootstrap'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <Grid className="App show-grid">
+        <Row className="App-header">
           <h1 className="App-title"><Link to={`/`}>Readable</Link></h1>
-        </header>
+        </Row>
         <Switch>
           <Route exact path="/post/new" render={(props) => (
-            <div>
-              <div>
+            <Row>
+              <Col>
                 <NewPost {...props} />
-              </div>
-            </div>
+              </Col>
+            </Row>
           )} />
 
           <Route exact path="/:category/:postId/comment/:commentId/edit" render={(props) => (
@@ -35,14 +36,10 @@ class App extends Component {
           )} />
 
           <Route exact path="/:category?" render={(props) => (
-            <div>
-              <div>
-                <CategoryList {...props} />
-              </div>
-              <div>
-                <Posts {...props} />
-              </div>
-            </div>
+            <Row>
+              <CategoryList {...props} />
+              <Posts {...props} />
+            </Row>
           )} />
 
           <Route exact path="/:category/:postId" render={(props) => (
@@ -63,7 +60,7 @@ class App extends Component {
             </div>
           )} />
         </Switch>
-      </div>
+      </Grid>
     );
   }
 }

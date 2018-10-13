@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { fetchPosts, deletePost, votePost, sortPosts } from '../actions/PostActions'
 import { Link } from 'react-router-dom'
 import { timeToString } from '../utils/helpers'
+import { Row, Col, Button } from 'react-bootstrap'
 
 class Posts extends Component {
   componentWillMount() {
@@ -16,6 +17,30 @@ class Posts extends Component {
     } else {
       return "all"
     }
+  }
+
+  renderTop(sortPosts) {
+    return (
+      <Fragment>
+        <Row>
+          <Col xs={6}>
+            <h2>Posts</h2>
+          </Col>
+          <Col xs={6}>
+            <Button className="pull-right" bsStyle="link" onClick={() => this.props.history.push("/post/new")}>New post</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <label htmlFor="sortSelector">Sort by:</label>
+            <select onChange={event => sortPosts(event.target.value)} id="sortSelector">
+              <option value='vote'>Vote</option>
+              <option value='date'>Date</option>
+            </select>
+          </Col>
+        </Row>
+      </Fragment>
+    )
   }
 
   render() {
@@ -33,24 +58,15 @@ class Posts extends Component {
 
     if (!posts || posts.length === 0) {
       return (
-        <div>
+        <Col md={9}>
+          {this.renderTop(sortPosts)}
           <h3>No posts yet, be the first to post!</h3>
-        </div>
+        </Col>
       )
     } else {
       return (
-        <div>
-          <h2>Posts</h2>
-          <div>
-            <label htmlFor="sortSelector">Sort by:</label>
-            <select onChange={event => sortPosts(event.target.value)} id="sortSelector">
-              <option value='vote'>Vote</option>
-              <option value='date'>Date</option>
-            </select>
-          </div>
-          <div>
-            <h3><Link to={`/post/new`}>New post</Link></h3>
-          </div>
+        <Col sm={9}>
+          {this.renderTop(sortPosts)}
           <ul>
             {sortCurrentPosts().map((post) => (
               <li key={post.id}>
@@ -69,7 +85,7 @@ class Posts extends Component {
               </li>
             ))}
           </ul>
-        </div>
+        </Col>
       );
     }
   }
