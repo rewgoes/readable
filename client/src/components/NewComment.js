@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { submitComment, fetchComments } from '../actions/CommentActions'
 
-class NewPost extends Component {
+class NewComment extends Component {
   state = {
     parentId: this.props.match.params.postId,
     comment: {
@@ -13,6 +13,14 @@ class NewPost extends Component {
   }
 
   clearForm() {
+    this.setState({
+      ...this.state,
+      comment: {
+        parentId: this.props.match.params.postId,
+        body: "",
+        author: "",
+      }
+    })
 
   }
 
@@ -46,6 +54,7 @@ class NewPost extends Component {
             event.preventDefault()
             submitComment(comment).then(() => {
               fetchComments(parentId)
+              this.clearForm()
             })
           }} /></div>
           <div><input type="button" value="Clear" onClick={(event) => {
@@ -71,4 +80,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPost)
+export default connect(mapStateToProps, mapDispatchToProps)(NewComment)

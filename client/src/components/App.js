@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import Comments from './Comments'
 import NewPost from './NewPost'
 import NewComment from './NewComment'
+import EditPost from './EditPost'
+import EditComment from './EditComment'
 
 class App extends Component {
   render() {
@@ -20,6 +22,14 @@ class App extends Component {
             <div>
               <div>
                 <NewPost {...props} />
+              </div>
+            </div>
+          )} />
+
+          <Route exact path="/:category/:postId/comment/:commentId/edit" render={(props) => (
+            <div>
+              <div>
+                <EditComment {...props} />
               </div>
             </div>
           )} />
@@ -41,6 +51,14 @@ class App extends Component {
                 <PostDetail {...props} />
                 <NewComment {...props} />
                 <Comments {...props} />
+              </div>
+            </div>
+          )} />
+
+          <Route exact path="/:category/:postId/edit" render={(props) => (
+            <div>
+              <div>
+                <EditPost {...props} />
               </div>
             </div>
           )} />

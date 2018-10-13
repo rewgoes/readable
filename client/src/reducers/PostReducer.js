@@ -6,7 +6,9 @@ import {
   REQUEST_VOTE_POST,
   RECEIVE_VOTE_POST,
   REQUEST_POST,
-  RECEIVE_POST
+  RECEIVE_POST,
+  REQUEST_EDIT_POST,
+  RECEIVE_EDIT_POST,
 } from '../actions/PostActions'
 
 export default function (state = [], action) {
@@ -27,6 +29,10 @@ export default function (state = [], action) {
       return state
     case RECEIVE_POST:
       return [action.posts]
+    case REQUEST_EDIT_POST:
+      return state
+    case RECEIVE_EDIT_POST:
+      return state.map((post) => post.id === action.posts.id ? action.posts : post)
     default:
       return state
   }

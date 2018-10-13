@@ -7,6 +7,10 @@ import {
   RECEIVE_VOTE_COMMENT,
   REQUEST_ADD_COMMENT,
   RECEIVE_ADD_COMMENT,
+  REQUEST_EDIT_COMMENT,
+  RECEIVE_EDIT_COMMENT,
+  REQUEST_COMMENT,
+  RECEIVE_COMMENT,
 } from '../actions/CommentActions'
 
 export default function (state = [], action) {
@@ -28,6 +32,14 @@ export default function (state = [], action) {
     case RECEIVE_ADD_COMMENT:
       state.push(action.comment)
       return state
+    case REQUEST_EDIT_COMMENT:
+      return state
+    case RECEIVE_EDIT_COMMENT:
+      return state.map((comment) => comment.id === action.comments.id ? action.comments : comment)
+    case REQUEST_COMMENT:
+      return state
+    case RECEIVE_COMMENT:
+      return [action.comments]
     default:
       return state
   }

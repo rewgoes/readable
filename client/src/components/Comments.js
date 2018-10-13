@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchComments, deleteComment, voteComment } from '../actions/CommentActions'
 import { timeToString } from '../utils/helpers'
+import { Link } from 'react-router-dom'
 
 class Comments extends Component {
   componentWillMount() {
-    this.props.getComments(this.props.match.params.postId);
+    this.props.getComments(this.props.match.params.postId)
   }
 
   render() {
     const { comments, deleteComment, voteComment } = this.props
+    const { category, postId } = this.props.match.params
 
     if (!comments || comments.length === 0) {
       return (
@@ -29,6 +31,7 @@ class Comments extends Component {
                   <div>{timeToString(new Date(comment.timestamp))}</div>
                   <div>Votes: {comment.voteScore}</div>
                   <div>{comment.body}</div>
+                  <div><Link to={`/${category}/${postId}/comment/${comment.id}/edit`}>Edit</Link></div>
                   <div><button href="#" onClick={() => deleteComment(comment.id)}>Delete</button ></div>
                   <div><button href="#" onClick={() => voteComment(comment.id, "upVote")}>Vote Up</button ></div>
                   <div><button href="#" onClick={() => voteComment(comment.id, "downVote")}>Vote Down</button ></div>

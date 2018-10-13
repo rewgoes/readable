@@ -5,6 +5,7 @@ import {
   votePostApi,
   fetchPostApi,
   addPostApi,
+  editPostApi
 } from '../utils/api'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
@@ -131,8 +132,6 @@ export function fetchPost(id) {
   }
 }
 
-
-
 export const REQUEST_ADD_POST = 'REQUEST_ADD_POST'
 function requestAddPost() {
   return {
@@ -156,6 +155,35 @@ export const submitPost = (post) =>
       addPostApi(post).then(
         result => {
           dispatch(receiveAddPost(result))
+          resolve(result)
+        }
+      )
+    });
+  }
+
+export const REQUEST_EDIT_POST = 'REQUEST_EDIT_POST'
+function requestEditPost() {
+  return {
+    type: REQUEST_EDIT_POST
+  }
+}
+
+export const RECEIVE_EDIT_POST = 'RECEIVE_EDIT_POST'
+function receiveEditPost(posts) {
+  return {
+    type: RECEIVE_EDIT_POST,
+    posts
+  }
+}
+
+export const editPost = (postId, post) =>
+  (dispatch) => {
+    dispatch(requestEditPost())
+
+    return new Promise((resolve) => {
+      editPostApi(postId, post).then(
+        result => {
+          dispatch(receiveEditPost(result))
           resolve(result)
         }
       )

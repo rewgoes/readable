@@ -3,6 +3,8 @@ import {
   deleteCommentApi,
   voteCommentApi,
   addCommentApi,
+  editCommentApi,
+  fetchCommentApi
 } from '../utils/api'
 
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS'
@@ -114,3 +116,59 @@ export const submitComment = (comment) =>
       )
     });
   }
+
+export const REQUEST_EDIT_COMMENT = 'REQUEST_EDIT_COMMENT'
+function requestEditComment() {
+  return {
+    type: REQUEST_EDIT_COMMENT
+  }
+}
+
+export const RECEIVE_EDIT_COMMENT = 'RECEIVE_EDIT_COMMENT'
+function receiveEditComment(comments) {
+  return {
+    type: RECEIVE_EDIT_COMMENT,
+    comments
+  }
+}
+
+export const editComment = (commentId, comment) =>
+  (dispatch) => {
+    dispatch(requestEditComment())
+
+    return new Promise((resolve) => {
+      editCommentApi(commentId, comment).then(
+        result => {
+          dispatch(receiveEditComment(result))
+          resolve(result)
+        }
+      )
+    });
+  }
+
+export const REQUEST_COMMENT = 'REQUEST_COMMENT'
+function requestComment() {
+  return {
+    type: REQUEST_COMMENT
+  }
+}
+
+export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
+function receiveComment(comments) {
+  return {
+    type: RECEIVE_COMMENT,
+    comments
+  }
+}
+
+export function fetchComment(id) {
+  return function (dispatch) {
+    dispatch(requestComment())
+
+    fetchCommentApi(id).then(
+      result => {
+        dispatch(receiveComment(result))
+      }
+    )
+  }
+}

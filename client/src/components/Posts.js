@@ -56,6 +56,7 @@ class Posts extends Component {
               <li key={post.id}>
                 <div>
                   <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
+                  <div>{post.category}</div>
                   <div>by {post.author}</div>
                   <div>{timeToString(new Date(post.timestamp))}</div>
                   <div>Comments: {post.commentCount}</div>
