@@ -23,9 +23,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/post/new" render={(props) => (
             <Row>
-              <Col>
-                <NewPost {...props} />
-              </Col>
+              <NewPost {...props} />
             </Row>
           )} />
 
