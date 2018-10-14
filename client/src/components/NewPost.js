@@ -2,19 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { submitPost } from '../actions/PostActions'
 import { fetchCategories } from '../actions/CategoryActions'
-import { Row, Col, Button, FormGroup, ButtonToolbar, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap'
+import { Row, Col, Button, FormGroup, ButtonToolbar, FormControl, ControlLabel } from 'react-bootstrap'
 import { isEmpty } from '../utils/helpers'
-
-function FieldGroup({ id, label, help, validationState, ...props }) {
-  return (
-    <FormGroup controlId={id} validationState={validationState}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-      <FormControl.Feedback />
-    </FormGroup>
-  );
-}
+import { FieldGroup } from './widget/FieldGroup'
 
 class NewPost extends Component {
   componentWillMount() {
