@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { editComment, fetchComment } from '../actions/CommentActions'
+import { isEmpty } from '../utils/helpers'
+import { Row, Col, Button, ButtonToolbar, } from 'react-bootstrap'
+import { FieldGroup } from './widget/FieldGroup'
 
 class NewPost extends Component {
   componentWillMount() {
@@ -15,6 +18,9 @@ class NewPost extends Component {
   }
 
   state = {
+    error: {
+      body: false,
+    },
     parentId: this.props.match.params.postId,
     category: this.props.match.params.category,
     comment: {
@@ -23,49 +29,90 @@ class NewPost extends Component {
     }
   }
 
-  render() {
-    const { comment, parentId, category } = this.state
-    const { editComment } = this.props
+  validateAndEditComment(id, comment) {
+    const error = {
+      body: isEmpty(comment.body),
+    }
 
-    return (
-      <div>
-        <h2>Edit Comment</h2>
-        <form>
-          <div>
-            <label htmlFor="body">Content:</label>
-            <textarea id="body" placeholder="Content" value={comment.body} onChange={(event) => this.setState({
-              comment: {
-                ...comment,
-                body: event.target.value
-              }
-            })} />
-          </div>
-          <div>
-            <label htmlFor="author">Author:</label>
-            <input type="text" id="author" disabled={true} placeholder="Author" value={comment.author} onChange={(event) => this.setState({
-              comment: {
-                ...comment,
-                author: event.target.value
-              }
-            })} />
-          </div>
-          <div><input type="submit" value="Edit" onClick={(event) => {
-            event.preventDefault()
-            editComment(comment.id, { body: comment.body }).then((comment) => {
-              if (comment) {
+    this.setState({
+      ...this.state,
+      error
+    })
+
+    if (!(error.body)) {
+      this.props.editComment(id, { body: comment.body }).then((result) => {
+        if (result) {
+          this.props.history.push(`/${this.state.category}/${this.state.parentId}`)
+        } else {
+          this.props.history.push("/")
+        }
+      })
+    }
+  }
+
+  render() {
+    const { comment, parentId, category, error } = this.state
+
+    if (isEmpty(comment)) {
+      return (
+        <Col xs={12}>
+          <Row>
+            <Col xs={12}>
+              <h2>Comment not Found</h2>
+            </Col>
+          </Row>
+        </Col>
+      )
+    } else {
+      return (
+        <Col xs={12}>
+          <Row>
+            <Col xs={12}>
+              <h2>Edit Comment</h2>
+            </Col>
+          </Row>
+          <form>
+            <FieldGroup
+              id="body"
+              type="text"
+              label="Content"
+              placeholder="Content"
+              validationState={error.body ? "error" : null}
+              componentClass="textarea"
+              value={comment.body}
+              onChange={(event) => this.setState({
+                error: {
+                  ...error,
+                  body: false
+                },
+                comment: {
+                  ...comment,
+                  body: event.target.value
+                }
+              })}
+            />
+            <FieldGroup
+              id="author"
+              type="text"
+              label="Author"
+              placeholder="Author"
+              value={comment.author}
+              disabled={true}
+            />
+            <ButtonToolbar>
+              <Button bsStyle="success" type="Edit" onClick={(event) => {
+                event.preventDefault()
+                this.validateAndEditComment(comment.id, { body: comment.body })
+              }}>Edit</Button>
+              <Button bsStyle="danger" type="submit" value="Cancel" onClick={(event) => {
+                event.preventDefault()
                 this.props.history.push(`/${category}/${parentId}`)
-              } else {
-                this.props.history.push("/")
-              }
-            })
-          }} /></div>
-          <div><input type="button" value="Cancel" onClick={(event) => {
-            event.preventDefault()
-            this.props.history.push(`/${category}/${parentId}`)
-          }} /></div>
-        </form>
-      </div>
-    )
+              }}>Cancel</Button>
+            </ButtonToolbar>
+          </form>
+        </Col>
+      )
+    }
   }
 }
 
