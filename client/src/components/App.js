@@ -28,11 +28,9 @@ class App extends Component {
           )} />
 
           <Route exact path="/:category/:postId/comment/:commentId/edit" render={(props) => (
-            <div>
-              <div>
-                <EditComment {...props} />
-              </div>
-            </div>
+            <Row>
+              <EditComment {...props} />
+            </Row>
           )} />
 
           <Route exact path="/:category?" render={(props) => (
@@ -43,21 +41,17 @@ class App extends Component {
           )} />
 
           <Route exact path="/:category/:postId" render={(props) => (
-            <div>
-              <div>
-                <PostDetail {...props} />
-                <NewComment {...props} />
-                <Comments {...props} />
-              </div>
-            </div>
+            <Row>
+              <PostDetail {...props} />
+              <NewComment {...props} />
+              <Comments {...props} />
+            </Row>
           )} />
 
           <Route exact path="/:category/:postId/edit" render={(props) => (
-            <div>
-              <div>
-                <EditPost {...props} />
-              </div>
-            </div>
+            <Row>
+              <EditPost {...props} />
+            </Row>
           )} />
         </Switch>
       </Grid>
