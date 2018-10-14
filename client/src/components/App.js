@@ -16,7 +16,9 @@ class App extends Component {
     return (
       <Grid className="App show-grid">
         <Row className="App-header">
-          <h1 className="App-title"><Link to={`/`}>Readable</Link></h1>
+          <Col xs={12}>
+            <h1 className="App-title"><Link to={`/`}>Readable</Link></h1>
+          </Col>
         </Row>
         <Switch>
           <Route exact path="/post/new" render={(props) => (

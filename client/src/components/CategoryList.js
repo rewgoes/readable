@@ -14,7 +14,7 @@ class CategoryList extends Component {
     const { categories, getPosts } = this.props
 
     return (
-      <Col md={3}>
+      <Col sm={3}>
         <Row>
           <Col md={12}>
             <h2>Categories</h2>

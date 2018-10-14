@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { fetchPosts, deletePost, votePost, sortPosts } from '../actions/PostActions'
+import { fetchPosts, votePost, sortPosts } from '../actions/PostActions'
 import { Link } from 'react-router-dom'
 import { timeToString } from '../utils/helpers'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Row, Col, Button, FormGroup, InputGroup, FormControl, Glyphicon, Panel } from 'react-bootstrap'
 
 class Posts extends Component {
   componentWillMount() {
@@ -23,28 +23,32 @@ class Posts extends Component {
     return (
       <Fragment>
         <Row>
-          <Col xs={6}>
+          <Col xs={12}>
             <h2>Posts</h2>
-          </Col>
-          <Col xs={6}>
-            <Button className="pull-right" bsStyle="link" onClick={() => this.props.history.push("/post/new")}>New post</Button>
           </Col>
         </Row>
         <Row>
-          <Col md={12}>
-            <label htmlFor="sortSelector">Sort by:</label>
-            <select onChange={event => sortPosts(event.target.value)} id="sortSelector">
-              <option value='vote'>Vote</option>
-              <option value='date'>Date</option>
-            </select>
+          <Col xs={6} sm={5} md={4}>
+            <FormGroup>
+              <InputGroup>
+                <InputGroup.Addon><Glyphicon glyph="glyphicon glyphicon-sort" /></InputGroup.Addon>
+                <FormControl componentClass="select" onChange={event => sortPosts(event.target.value)} id="sortSelector">
+                  <option value='vote'>Vote</option>
+                  <option value='date'>Date</option>
+                </FormControl>
+              </InputGroup>
+            </FormGroup>
+          </Col>
+          <Col xs={6} sm={7} md={8}>
+            <Button className="pull-right" bsStyle="primary" onClick={() => this.props.history.push("/post/new")}>New post</Button>
           </Col>
         </Row>
-      </Fragment>
+      </Fragment >
     )
   }
 
   render() {
-    const { posts, deletePost, votePost, sortPosts, sort } = this.props
+    const { posts, votePost, sortPosts, sort } = this.props
     const sortCurrentPosts = () => {
       switch (sort) {
         case "vote":
@@ -58,7 +62,7 @@ class Posts extends Component {
 
     if (!posts || posts.length === 0) {
       return (
-        <Col md={9}>
+        <Col sm={9}>
           {this.renderTop(sortPosts)}
           <h3>No posts yet, be the first to post!</h3>
         </Col>
@@ -67,24 +71,41 @@ class Posts extends Component {
       return (
         <Col sm={9}>
           {this.renderTop(sortPosts)}
-          <ul>
-            {sortCurrentPosts().map((post) => (
-              <li key={post.id}>
-                <div>
-                  <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
-                  <div>{post.category}</div>
-                  <div>by {post.author}</div>
-                  <div>{timeToString(new Date(post.timestamp))}</div>
-                  <div>Comments: {post.commentCount}</div>
-                  <div>Votes: {post.voteScore}</div>
-                  <div>{post.body}</div>
-                  <div><button href="#" onClick={() => deletePost(post.id)}>Delete</button ></div>
-                  <div><button href="#" onClick={() => votePost(post.id, "upVote")}>Vote Up</button ></div>
-                  <div><button href="#" onClick={() => votePost(post.id, "downVote")}>Vote Down</button ></div>
-                </div>
-              </li>
-            ))}
-          </ul>
+          {sortCurrentPosts().map((post) => (
+            <Panel key={post.id}>
+              <Panel.Heading>
+                <Row>
+                  <Col xs={8}>
+                    <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
+                  </Col>
+                  <Col xs={4}>
+                    <span className="pull-right">
+                      <Button bsSize="small" onClick={() => votePost(post.id, "upVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-up" /></Button>
+                      <Button bsSize="small" onClick={() => votePost(post.id, "downVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-down" /></Button>
+                    </span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={5}>by {post.author}</Col>
+                  <Col xs={7}><span className="pull-right">{timeToString(new Date(post.timestamp))}</span></Col>
+                </Row>
+                <div>{post.category}</div>
+              </Panel.Heading>
+              <Panel.Body>
+                <div>{post.body}</div>
+              </Panel.Body>
+              <Panel.Footer>
+                <Row>
+                  <Col xs={6}>Comments: {post.commentCount}</Col>
+                  <Col xs={6}>
+                    <span className="pull-right">
+                      Votes: {post.voteScore}
+                    </span>
+                  </Col>
+                </Row>
+              </Panel.Footer>
+            </Panel>
+          ))}
         </Col>
       );
     }
@@ -101,7 +122,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getPosts: (category) => dispatch(fetchPosts(category)),
-    deletePost: (id) => dispatch(deletePost(id)),
     votePost: (id, vote) => dispatch(votePost(id, vote)),
     sortPosts: (sortBy) => dispatch(sortPosts(sortBy)),
   }
