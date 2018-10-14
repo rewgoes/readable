@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchComments, deleteComment, voteComment } from '../actions/CommentActions'
 import { timeToString } from '../utils/helpers'
-import { Link } from 'react-router-dom'
+import { Row, Col, Button, Glyphicon, Panel, ButtonToolbar } from 'react-bootstrap'
 
 class Comments extends Component {
   componentWillMount() {
@@ -15,31 +15,76 @@ class Comments extends Component {
 
     if (!comments || comments.length === 0) {
       return (
-        <div>
-          <h3>No comments yet, be the first to comment!</h3>
-        </div>
+        <Col xs={12}>
+          <Row>
+            <Col xs={12}>
+              <h3>Comments</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <h4>No comments yet, be the first to comment!</h4>
+            </Col>
+          </Row>
+        </Col>
       )
     } else {
       return (
-        <div>
-          <h3>Comments</h3>
-          <ul>
-            {comments.map((comment) => (
-              <li key={comment.id}>
-                <div>
-                  <div>by {comment.author}</div>
-                  <div>{timeToString(new Date(comment.timestamp))}</div>
-                  <div>Votes: {comment.voteScore}</div>
-                  <div>{comment.body}</div>
-                  <div><Link to={`/${category}/${postId}/comment/${comment.id}/edit`}>Edit</Link></div>
-                  <div><button href="#" onClick={() => deleteComment(comment.id)}>Delete</button ></div>
-                  <div><button href="#" onClick={() => voteComment(comment.id, "upVote")}>Vote Up</button ></div>
-                  <div><button href="#" onClick={() => voteComment(comment.id, "downVote")}>Vote Down</button ></div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Col xs={12}>
+          <Row>
+            <Col xs={12}>
+              <h3>Comments</h3>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs={12}>
+              {comments.map((comment) => (
+                <Panel key={comment.id}>
+                  <Panel.Body>
+                    <Row>
+                      <Col xs={9} sm={10} lg={11}>
+                        {comment.body}
+                      </Col>
+                      <Col xs={3} sm={2} lg={1} className="comment-status">
+                        <Row>
+                          <Col xs={12}>
+                            <div className="pull-right">Votes: {comment.voteScore}</div>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={12}>
+                            <ButtonToolbar className="pull-right">
+                              <Button bsSize="xsmall" bsStyle="primary" onClick={() => this.props.history.push(`/${category}/${postId}/comment/${comment.id}/edit`)}>
+                                <Glyphicon glyph="glyphicon glyphicon-edit" />
+                              </Button>
+                              <Button bsSize="xsmall" bsStyle="danger" onClick={() => deleteComment(comment.id)}>
+                                <Glyphicon glyph="glyphicon glyphicon-trash" />
+                              </Button>
+                            </ButtonToolbar>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Panel.Body>
+                  <Panel.Footer>
+                    <Row>
+                      <Col xs={8}>
+                        <div>by {comment.author}, on {timeToString(new Date(comment.timestamp))}</div>
+                      </Col>
+                      <Col xs={4}>
+                        <ButtonToolbar className="pull-right">
+                          <Button bsSize="small" onClick={() => voteComment(comment.id, "downVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-down" /></Button>
+                          <Button bsSize="small" onClick={() => voteComment(comment.id, "upVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-up" /></Button>
+                        </ButtonToolbar>
+                      </Col>
+                    </Row>
+                  </Panel.Footer>
+                </Panel>
+              ))}
+            </Col>
+          </Row>
+        </Col>
       )
     }
   }

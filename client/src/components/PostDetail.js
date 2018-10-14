@@ -28,8 +28,8 @@ class PostDetail extends Component {
               </Col>
               <Col xs={4}>
                 <ButtonToolbar className="pull-right">
-                  <Button bsSize="small" onClick={() => votePost(post.id, "upVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-up" /></Button>
                   <Button bsSize="small" onClick={() => votePost(post.id, "downVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-down" /></Button>
+                  <Button bsSize="small" onClick={() => votePost(post.id, "upVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-up" /></Button>
                 </ButtonToolbar>
               </Col>
             </Row>
