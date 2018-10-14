@@ -1,6 +1,9 @@
 # Readable
 A content and comment web app. Users are able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users are also able to edit and delete posts and comments. This project is part of the Udacity's React Nanodegree.
 
+## Screenshot
+![screen](../master/res/readable_screenshot_1.png)
+
 ## Running the App
 
 * Clone or download this repo.
