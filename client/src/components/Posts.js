@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchPosts, votePost, sortPosts } from '../actions/PostActions'
 import { Link } from 'react-router-dom'
 import { timeToString } from '../utils/helpers'
-import { Row, Col, Button, FormGroup, InputGroup, FormControl, Glyphicon, Panel } from 'react-bootstrap'
+import { Row, Col, Button, FormGroup, InputGroup, FormControl, Glyphicon, Panel, ButtonToolbar } from 'react-bootstrap'
 
 class Posts extends Component {
   componentWillMount() {
@@ -79,10 +79,10 @@ class Posts extends Component {
                     <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
                   </Col>
                   <Col xs={4}>
-                    <span className="pull-right">
+                    <ButtonToolbar className="pull-right">
                       <Button bsSize="small" onClick={() => votePost(post.id, "upVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-up" /></Button>
                       <Button bsSize="small" onClick={() => votePost(post.id, "downVote")}> <Glyphicon glyph="glyphicon glyphicon-thumbs-down" /></Button>
-                    </span>
+                    </ButtonToolbar>
                   </Col>
                 </Row>
                 <Row>

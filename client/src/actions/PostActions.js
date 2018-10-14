@@ -58,17 +58,19 @@ function receiveDeletePost(posts) {
   }
 }
 
-export function deletePost(id) {
-  return function (dispatch) {
+export const deletePost = (id) =>
+  (dispatch) => {
     dispatch(requestDeletePost())
 
-    deletePostApi(id).then(
-      result => {
-        dispatch(receiveDeletePost(result))
-      }
-    )
+    return new Promise((resolve) => {
+      deletePostApi(id).then(
+        result => {
+          dispatch(receiveDeletePost(result))
+          resolve(result)
+        }
+      )
+    });
   }
-}
 
 export const REQUEST_VOTE_POST = 'REQUEST_VOTE_POST'
 function requestVotePost() {
