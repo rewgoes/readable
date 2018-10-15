@@ -39,7 +39,11 @@ export default function (state = [], action) {
     case REQUEST_COMMENT:
       return state
     case RECEIVE_COMMENT:
-      return [action.comments]
+      if (!action.comments.id) {
+        return []
+      } else {
+        return [action.comments]
+      }
     default:
       return state
   }

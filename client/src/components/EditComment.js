@@ -53,7 +53,7 @@ class NewPost extends Component {
   render() {
     const { comment, parentId, category, error } = this.state
 
-    if (isEmpty(comment)) {
+    if (!comment.id) {
       return (
         <Col xs={12}>
           <Row>

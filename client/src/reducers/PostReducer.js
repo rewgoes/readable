@@ -33,7 +33,11 @@ export default function (state = [], action) {
     case REQUEST_POST:
       return state
     case RECEIVE_POST:
-      return [action.posts]
+      if (!action.posts.id) {
+        return []
+      } else {
+        return [action.posts]
+      }
     case REQUEST_EDIT_POST:
       return state
     case RECEIVE_EDIT_POST:
@@ -44,7 +48,6 @@ export default function (state = [], action) {
         commentCount: post.commentCount + 1
       } : post)
     case RECEIVE_DELETE_COMMENT:
-      console.log(action)
       return state.map((post) => post.id === action.comment.parentId ? {
         ...post,
         commentCount: post.commentCount - 1

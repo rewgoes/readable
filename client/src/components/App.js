@@ -4,9 +4,7 @@ import CategoryList from './CategoryList'
 import Posts from './Posts'
 import PostDetail from './PostDetail'
 import { Link } from 'react-router-dom'
-import Comments from './Comments'
 import NewPost from './NewPost'
-import NewComment from './NewComment'
 import EditPost from './EditPost'
 import EditComment from './EditComment'
 import { Row, Grid, Col } from 'react-bootstrap'
@@ -43,8 +41,6 @@ class App extends Component {
           <Route exact path="/:category/:postId" render={(props) => (
             <Row>
               <PostDetail {...props} />
-              <NewComment {...props} />
-              <Comments {...props} />
             </Row>
           )} />
 
