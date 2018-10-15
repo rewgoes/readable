@@ -110,7 +110,7 @@ class NewComment extends Component {
                 <Button bsStyle="danger" type="submit" value="Clear" onClick={(event) => {
                   event.preventDefault()
                   this.clearForm()
-                }}>Cancel</Button>
+                }}>Clear</Button>
               </ButtonToolbar>
             </Col>
           </Row>
