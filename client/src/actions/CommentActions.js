@@ -42,10 +42,10 @@ function requestDeleteComment() {
 }
 
 export const RECEIVE_DELETE_COMMENT = 'RECEIVE_DELETE_COMMENT'
-function receiveDeleteComment(comments) {
+function receiveDeleteComment(comment) {
   return {
     type: RECEIVE_DELETE_COMMENT,
-    comments
+    comment
   }
 }
 

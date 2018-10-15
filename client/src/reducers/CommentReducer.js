@@ -22,7 +22,7 @@ export default function (state = [], action) {
     case REQUEST_DELETE_COMMENT:
       return state
     case RECEIVE_DELETE_COMMENT:
-      return state.filter((comments) => comments.id !== action.comments.id)
+      return state.filter((comments) => comments.id !== action.comment.id)
     case REQUEST_VOTE_COMMENT:
       return state
     case RECEIVE_VOTE_COMMENT:

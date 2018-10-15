@@ -11,6 +11,11 @@ import {
   RECEIVE_EDIT_POST,
 } from '../actions/PostActions'
 
+import {
+  RECEIVE_ADD_COMMENT,
+  RECEIVE_DELETE_COMMENT
+} from '../actions/CommentActions'
+
 export default function (state = [], action) {
   switch (action.type) {
     case REQUEST_POSTS:
@@ -33,6 +38,17 @@ export default function (state = [], action) {
       return state
     case RECEIVE_EDIT_POST:
       return state.map((post) => post.id === action.posts.id ? action.posts : post)
+    case RECEIVE_ADD_COMMENT:
+      return state.map((post) => post.id === action.comment.parentId ? {
+        ...post,
+        commentCount: post.commentCount + 1
+      } : post)
+    case RECEIVE_DELETE_COMMENT:
+      console.log(action)
+      return state.map((post) => post.id === action.comment.parentId ? {
+        ...post,
+        commentCount: post.commentCount - 1
+      } : post)
     default:
       return state
   }
